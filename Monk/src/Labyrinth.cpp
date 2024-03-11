@@ -1,25 +1,22 @@
 #pragma once
 #include "Labyrinth.h"
 
-Labyrinth::Labyrinth()
-{
-
-}
+#include <iostream>
 
 Labyrinth* Labyrinth::getInstance()
 {
-	if (instancePtr == NULL)
+	if (instance == NULL)
 	{
-		instancePtr = Labyrinth();
+		instance = new Labyrinth();
 	}
 
-	return instancePtr;
+	return instance;
 }
 
 Room* Labyrinth::generateLabyrinth(Size size)
 {
 	// Size of map length/width
-	int width = ;
+	int width = size/2;
 
 	// Imperfect randomisation
 	int x = rand() * width;
@@ -29,9 +26,13 @@ Room* Labyrinth::generateLabyrinth(Size size)
 
 	Room* startRoom = new Room(Coord(x, y), true);
 	m_map[x][y] = startRoom;
+	Room* prevRoom = startRoom;
 
 	for (int i = 1; i < size; i++)
 	{
+
+		x = prevRoom->getCoords().x;
+		y = prevRoom->getCoords().y;
 
 		// Push back adjacent squares, that don't have a room attatched
 		if (x > 0 && x < width)
@@ -49,7 +50,7 @@ Room* Labyrinth::generateLabyrinth(Size size)
 
 		if (y > 0 && y < width)
 		{
-			if (m_map[x-1][y] == NULL)
+			if (m_map[x - 1][y] == NULL)
 			{
 				potentialRooms.push_back(Coord(x - 1, y));
 			}
@@ -60,15 +61,19 @@ Room* Labyrinth::generateLabyrinth(Size size)
 			}
 		}
 
-		// Create new Room object
-		Room* e = new Room();
-
 		// Select random adjacentRoom
 		int randomCoord = rand() * potentialRooms.size();
-		Coord a = potentialRooms(randomCoord);
+		Coord a = potentialRooms[randomCoord];
 
 		x = a.x;
 		y = a.y;
+
+		// Create new Room object
+		Coord tmp;
+		tmp.x = x;
+		tmp.y = y;
+		Room* e = new Room(tmp);
+		prevRoom = e;
 
 		m_map[x][y] = e;
 
@@ -77,7 +82,7 @@ Room* Labyrinth::generateLabyrinth(Size size)
 		// Prevents rooms from being beyond the goal + unreachable
 		if (i == size - 1)
 		{
-			e->addEvent(END);
+			//e->addEvent(Events::END);
 		}
 
 	}
@@ -88,38 +93,46 @@ Room* Labyrinth::generateLabyrinth(Size size)
 Room* Labyrinth::getRoom(Room* r, Direction d)
 {
 
+	int x, y;
 	Room* nextRoom = NULL;
 
 	switch (d)
 	{
-		case(UP)
-		{
+		case(UP):
+		
 			x = r->getCoords().x;
 			y = r->getCoords().y + 1;
 			break;
-		}
+		
 
-		case(DOWN)
-		{
+		case(DOWN):
+		
 			x = r->getCoords().x;
 			y = r->getCoords().y - 1;
 			break;
-		}
+		
 
-		case(LEFT)
-		{
+		case(LEFT):
+		
 			x = r->getCoords().x-1;
 			y = r->getCoords().y;
 			break;
-		}
+		
 
-		case(RIGHT)
-		{
+		case(RIGHT):
+		
 			x = r->getCoords().x+1;
 			y = r->getCoords().y;
 			break;
-		}
+		
+
+		default:
+		
+			std::cout << "INVALID DIRECTION" << std::endl;
+		
+
 	}
 
 	nextRoom = m_map[x][y];
+	return nextRoom;
 }

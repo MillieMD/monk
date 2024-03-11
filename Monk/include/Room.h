@@ -1,5 +1,7 @@
 #pragma once
-#include "Monk.h"
+#include "Event.h"
+
+#include <vector>
 
 struct Coord
 {
@@ -10,15 +12,17 @@ struct Coord
 class Room
 {
 public:
-	Room(Coord coords, bool startRoom = false);
+	Room(const Coord coords, bool startRoom = false);
 
 	std::vector<Events::Event*> getEvents();
-	void addEvent(EventType e);
+	void addEvent(Events::EventType e);
+
 	bool isVisited();
 	void setVisited(bool visited);
+	Coord getCoords();
 
 private:
-	bool visited = false;
-	Coord coords;
+	bool m_visited = false;
+	Coord m_coords;
 	std::vector<Events::Event*> m_events;
 };

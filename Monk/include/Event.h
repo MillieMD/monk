@@ -1,13 +1,14 @@
 #pragma once
 
-// Combat > End > Loot
-enum EventType {LOOT, END, COMBAT};
 
 namespace Events
 {
+
+	// Combat > End > Loot
+	enum EventType { LOOT, END, COMBAT };
+
 	class Event
 	{
-	public:
 
 	};
 

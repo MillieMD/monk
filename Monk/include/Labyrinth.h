@@ -1,5 +1,6 @@
 #pragma once
-#include "Monk.h"
+#include "Room.h"
+#include <vector>
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
 enum Size {SMALL = 20, MEDIUM = 30, LARGE = 40};
@@ -13,8 +14,8 @@ public:
 	Room* getRoom(Room* r, Direction d);
 
 private:
-	Labyrinth();
+	Labyrinth(){};
 
-	Labyrinth* instancePtr = NULL;
-	std::vector<std::vector<Room>> m_map;
+	Labyrinth* instance = NULL;
+	std::vector<std::vector<Room*>> m_map;
 };
