@@ -19,8 +19,8 @@ Room* Labyrinth::generateLabyrinth(Size size)
 	int width = size/2;
 
 	// Imperfect randomisation
-	int x = rand() * width;
-	int y = rand() * width;
+	int x = rand() % width;
+	int y = rand() % width;
 
 	std::vector<Coord> potentialRooms;
 
@@ -62,7 +62,7 @@ Room* Labyrinth::generateLabyrinth(Size size)
 		}
 
 		// Select random adjacentRoom
-		int randomCoord = rand() * potentialRooms.size();
+		int randomCoord = rand() % potentialRooms.size();
 		Coord a = potentialRooms[randomCoord];
 
 		x = a.x;
@@ -82,7 +82,7 @@ Room* Labyrinth::generateLabyrinth(Size size)
 		// Prevents rooms from being beyond the goal + unreachable
 		if (i == size - 1)
 		{
-			//e->addEvent(Events::END);
+			e->addEvent(Events::END);
 		}
 
 	}
@@ -99,38 +99,24 @@ Room* Labyrinth::getRoom(Room* r, Direction d)
 	switch (d)
 	{
 		case(UP):
-		
 			x = r->getCoords().x;
 			y = r->getCoords().y + 1;
 			break;
 		
-
 		case(DOWN):
-		
 			x = r->getCoords().x;
 			y = r->getCoords().y - 1;
 			break;
 		
-
 		case(LEFT):
-		
 			x = r->getCoords().x-1;
 			y = r->getCoords().y;
 			break;
 		
-
 		case(RIGHT):
-		
 			x = r->getCoords().x+1;
 			y = r->getCoords().y;
 			break;
-		
-
-		default:
-		
-			std::cout << "INVALID DIRECTION" << std::endl;
-		
-
 	}
 
 	nextRoom = m_map[x][y];
