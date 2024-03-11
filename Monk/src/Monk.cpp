@@ -1,12 +1,10 @@
-﻿// Monk.cpp : Defines the entry point for the application.
-//
-
+﻿#pragma once
 #include "Monk.h"
-
-using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+
+	//GameMaster* gm = GameMaster::getInstance();
+
 	return 0;
 }
