@@ -1,12 +1,21 @@
 #pragma once
 #include "Event.h"
 
+#include <string>
 #include <vector>
 
 struct Coord
 {
 	int x;
 	int y;
+};
+
+struct Item
+{
+	std::string name;
+	std::string desc;
+
+	int score;
 };
 
 class Room
